@@ -339,6 +339,41 @@ def show_fetch_data_button(webproperty, search_type, start_date, end_date, selec
 
 
 # -------------
+# Streamlit App Configuration
+# -------------
+
+def setup_streamlit():
+    """
+    Configures Streamlit's page settings and displays the app title and markdown information.
+    Sets the page layout, title, and markdown content with links and app description.
+    """
+    st.set_page_config(page_title="✨ Simple Google Search Console Data | LeeFoot.co.uk", layout="wide")
+    st.title("✨ Simple Google Search Console Data | Dec 23")
+    st.markdown(f"### Lightweight GSC Data Extractor. (Max {MAX_ROWS:,} Rows)")
+
+    st.markdown(
+        """
+        <p>
+            Created by <a href="https://twitter.com/LeeFootSEO" target="_blank">LeeFootSEO</a> |
+            <a href="https://leefoot.co.uk" target="_blank">More Apps & Scripts on my Website</a>
+        """,
+        unsafe_allow_html=True
+    )
+    st.divider()
+
+def show_display_mode_selector():
+    """
+    Displays a dropdown selector for choosing the display mode.
+    Returns the selected display mode.
+    """
+    return st.sidebar.selectbox(
+        "Select Display Mode:",
+        ["Table", "Chart"],
+        index=0,
+        key='display_mode_selector'
+    )
+
+# -------------
 # Main Streamlit App Function
 # -------------
 
@@ -349,6 +384,7 @@ def main():
     Handles the app setup, authentication, UI components, and data fetching logic.
     """
     setup_streamlit()
+    display_mode = show_display_mode_selector()
     client_config = load_config()
     st.session_state.auth_flow, st.session_state.auth_url = google_auth(client_config)
 
@@ -372,8 +408,13 @@ def main():
             date_range_selection = show_date_range_selector()
             start_date, end_date = calc_date_range(date_range_selection)
             selected_dimensions = show_dimensions_selector(search_type)
-            show_fetch_data_button(webproperty, search_type, start_date, end_date, selected_dimensions)
-
+            
+            if display_mode == "Table":
+                show_fetch_data_button(webproperty, search_type, start_date, end_date, selected_dimensions)
+            elif display_mode == "Chart":
+                report = fetch_data_loading(webproperty, search_type, start_date, end_date, selected_dimensions)
+                if report is not None:
+                    st.line_chart(report.set_index('date'))  # Show data in a line chart
 
 if __name__ == "__main__":
     main()
