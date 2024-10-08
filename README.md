@@ -106,7 +106,7 @@ Before running the app, ensure that you have:
 
 ---
 
-**Auteur / Author**: Lee Foot  
-**Website**: [LeeFoot.co.uk](https://leefoot.co.uk)  
-**Contact**: [Twitter @LeeFootSEO](https://twitter.com/LeeFootSEO)  
-
+**Auteur / Author** : Clément Desmousseaux
+** Inspired by ** : [LeeFoot.co.uk](https://leefoot.co.uk)  
+**Contact** : [Twitter](https://x.com/clementdesmouss)
+**Wnat to receive amazing tips for your SEO and SEA ** :  [Subscribe to my Newsletter / Inscris-toi à ma newsletter](https://searchlab.email)
